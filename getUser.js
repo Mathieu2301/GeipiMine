@@ -95,6 +95,9 @@ module.exports = (id = 0, proxy = false) => {
         center,
         room,
       });
-    } else cb({});
+    } else {
+      if (data.includes('Parcoursup')) cb({});
+      else cb({ error: true });
+    }
   });
 };

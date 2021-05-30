@@ -24,8 +24,9 @@ function submitUser(id) {
   });
 
   console.log('Starting miner...');
-  function get(i = 0) {
-    setTimeout(() => get(i + 1), 100);
+  function get(i = 0, retry = false) {
+    if (!retry) setTimeout(() => get(i + 1), 100);
+    else console.log('Retry getting', i);
 
     if (savedUsers.find((u) => u.id === i)) {
       console.log('User', i, 'is already registered');
@@ -34,6 +35,7 @@ function submitUser(id) {
 
     getUser(i, !(i%2)).then((rs) => {
       if (rs.id) submitUser(i);
+      else if (rs.error) get(i, true);
       else console.log(i, rs);
       fs.writeFileSync('./lastID.txt', `${i}`);
     });

@@ -50,9 +50,10 @@ export default {
     searchText: '',
 
     columns: [
-      { prop: 'id', name: 'ID Parcoursup', sortable: true, size: 85, pin: 'colPinStart' },
-      { prop: 'nom', name: 'Nom', sortable: true, size: 120, pin: 'colPinStart' },
-      { prop: 'prenom', name: 'Prénom', sortable: true, size: 110, pin: 'colPinStart' },
+      { prop: 'i', name: '', size: 60, sortable: true },
+      { prop: 'id', name: 'ID Parcoursup', sortable: true, size: 85 },
+      { prop: 'nom', name: 'Nom', sortable: true, size: 120 },
+      { prop: 'prenom', name: 'Prénom', sortable: true, size: 110 },
       { prop: 'oralMark', name: 'Oral', size: 85, sortable: true },
       { prop: 'mathsMark', name: 'Maths', size: 95, sortable: true },
       { prop: 'specMark', name: 'Spé', size: 80, sortable: true },
@@ -81,21 +82,45 @@ export default {
         if (u.oralMark !== null) type = 'Convoqués à l\'oral';
         if (u.mathsMark !== null || u.specMark !== null) type = 'Convoqués au concours';
 
+        const oralMark = u.oralMark !== null ? parseFloat(u.oralMark) : '-';
+        const mathsMark = u.mathsMark !== null ? parseFloat(u.mathsMark) : '-';
+        const specMark = u.specMark !== null ? parseFloat(u.specMark) : '-';
+
+        let avgMark = 0;
+        let nbrMark = 0;
+        if (oralMark !== '-') {
+          avgMark += oralMark;
+          nbrMark += 1;
+        }
+        if (mathsMark !== '-') {
+          avgMark += mathsMark;
+          nbrMark += 1;
+        }
+        if (specMark !== '-') {
+          avgMark += specMark;
+          nbrMark += 1;
+        }
+
+        if (nbrMark) avgMark /= nbrMark;
+
         return {
           id: u.id || '-',
           prenom: u.prenom || '-',
           nom: u.nom || '-',
           type,
-          oralMark: (u.oralMark ? this.rnd(u.oralMark) : '-'),
-          mathsMark: (u.mathsMark ? this.rnd(u.mathsMark) : '-'),
-          specMark: (u.specMark ? this.rnd(u.specMark) : '-'),
+          avgMark,
+          oralMark,
+          mathsMark,
+          specMark,
           spec: u.spec || '-',
           date: (u.date ? u.date.split('de ').pop().replace('à', '-').replace(/00/g, '') : '-'),
           coord: u.coord || '-',
           center: u.center || '-',
           room: u.room || '-',
         };
-      });
+      })
+        .sort((a, b) => b.avgMark - a.avgMark)
+        .map((u, i) => ({ ...u, i: i + 1 }));
     },
 
     global() {
@@ -157,10 +182,15 @@ export default {
     },
 
     searchFilter(v) {
+      let type = 'Absents';
+      if (v.oralMark !== null) type = 'Convoqués à l\'oral';
+      if (v.mathsMark !== null || v.specMark !== null) type = 'Convoqués au concours';
+
       const srh = this.searchText.toUpperCase();
       return `${v.id}`.startsWith(srh)
         || v.nom.includes(srh)
         || v.prenom.toUpperCase().includes(srh)
+        || type.toUpperCase().includes(srh)
         || `${v.oralMark}`.includes(srh)
         || `${v.mathsMark}`.includes(srh)
         || `${v.specMark}`.includes(srh)
@@ -175,6 +205,8 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Questrial&display=swap');
+
 :root {
   --color1: #ddd;
   --color2: #131722;
