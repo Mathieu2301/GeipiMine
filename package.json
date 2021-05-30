@@ -7,8 +7,5 @@
     "main": "node main"
   },
   "author": "Mathieu Colmon",
-  "license": "ISC",
-  "dependencies": {
-    "sqlite3": "^5.0.2"
-  }
+  "license": "ISC"
 }
