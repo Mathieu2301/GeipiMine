@@ -1,0 +1,14 @@
+{
+  "name": "geipimine",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "main": "node main"
+  },
+  "author": "Mathieu Colmon",
+  "license": "ISC",
+  "dependencies": {
+    "sqlite3": "^5.0.2"
+  }
+}
