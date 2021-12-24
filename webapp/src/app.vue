@@ -166,7 +166,7 @@ export default {
 
   methods: {
     async fetch() {
-      this.users = await (await fetch('https://geipimine.usp-3.fr/fetch')).json();
+      this.users = await (await fetch('https://geipimine.apis.colmon.fr/fetch')).json();
       localStorage.setItem('userList', JSON.stringify(this.users));
     },
 
