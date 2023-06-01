@@ -71,8 +71,6 @@ services:
       - 'traefik.enable=true'
       - 'traefik.http.routers.geipimine-api.rule=Host(`${SERVER_URL}`)'
       - 'traefik.http.routers.geipimine-api.entrypoints=https'
-    volumes:
-      - files:/var/www/html/files
     networks:
       - default
       - mariadb
@@ -83,7 +81,4 @@ networks:
     external: true
   mariadb:
     external: true
-
-volumes:
-  files:
 ```

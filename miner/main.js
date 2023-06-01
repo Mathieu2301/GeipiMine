@@ -33,7 +33,7 @@ function submitUser(id) {
       return false;
     }
 
-    getUser(i, !(i%2)).then((rs) => {
+    getUser(i, !(i % 2)).then((rs) => {
       if (rs.id) submitUser(i);
       else if (rs.error) get(i, true);
       else console.log(i, rs);

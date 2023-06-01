@@ -245,7 +245,7 @@ body * {
   font-family: Questrial, Arial, sans-serif;
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
-  -webkit-appearance: none;
+  appearance: none;
   text-shadow: 0 0 2px #00000020;
 }
 
