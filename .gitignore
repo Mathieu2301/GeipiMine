@@ -1,6 +1,7 @@
-node_modules
-/dist
-.vscode
-package-lock.json
+node_modules/
+dist/
+.vscode/
 .vercel
 Tor/
+
+.env

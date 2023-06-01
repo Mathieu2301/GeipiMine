@@ -3,7 +3,7 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: content-type');
 header('Content-Type: application/json; charset=utf-8');
 
-require('../mysql.php'); // $pdo = ...
+require_once('./mysql.php');
 
 function rs($rs) {
   exit(json_encode($rs));

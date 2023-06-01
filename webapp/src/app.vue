@@ -41,6 +41,11 @@
 /* eslint-disable max-len */
 import VGrid from '@revolist/vue3-datagrid';
 
+const API_URL = (process.env.NODE_ENV === 'production'
+  ? 'https://geipimine.apis.colmon.fr'
+  : 'http://localhost:3000'
+);
+
 export default {
   name: 'GeipiClassement',
   components: { VGrid },
@@ -166,7 +171,7 @@ export default {
 
   methods: {
     async fetch() {
-      this.users = await (await fetch('https://geipimine.apis.colmon.fr/fetch')).json();
+      this.users = await (await fetch(`${API_URL}/fetch`)).json();
       localStorage.setItem('userList', JSON.stringify(this.users));
     },
 
